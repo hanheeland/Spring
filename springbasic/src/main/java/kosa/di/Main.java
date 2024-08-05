@@ -30,8 +30,12 @@ public class Main {
 	   // 3. 스프링 컨테이너 생성 (aop 파일로 생성)
 	   ApplicationContext factory =
 			   new ClassPathXmlApplicationContext(conFiguration);
+//	   
+//      Service service = (Service)factory.getBean("writeServicey");
+//      service.insertService();
 	   
-      Service service = (Service)factory.getBean("writeServicey");
-      service.insertService();
+	   Kosa kosa = (Kosa)factory.getBean("kosaService");
+	   //kosa.insertService();
+	   kosa.list();
    }
 }
