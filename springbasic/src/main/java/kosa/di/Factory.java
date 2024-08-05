@@ -3,7 +3,7 @@ package kosa.di;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration // 설정 파일로 사용한다.
+//@Configuration // 설정 파일로 사용한다.
 public class Factory {
 	
 	@Bean

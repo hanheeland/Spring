@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 public class WriteService implements Service {
 	
 	@Autowired
-	//@Qualifier("mySQLDao") // mySQLDao를 먼저 선택한다.
+	@Qualifier("mySQLDao") // mySQLDao를 먼저 선택한다.
 	private Dao dao;
 	
 	public WriteService() {}
