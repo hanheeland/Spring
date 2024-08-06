@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -41,11 +42,22 @@ public class BoardController {
 		return "list";
 	}
 	
-	@GetMapping("/board_detail")
-	public String board_detail(@RequestParam("seq") int seq, Model model) {
+//	@GetMapping("/board_detail")
+//	public String board_detail(@RequestParam("seq") int seq, Model model) {
+//		Board board = dao.detailBoard(seq);
+//		model.addAttribute("board", board);
+//		return "detail";
+//	}
+	
+	@GetMapping("/board_detail/{seq}")
+	public String board_detail(@PathVariable int seq, Model model) {
 		Board board = dao.detailBoard(seq);
 		model.addAttribute("board", board);
 		return "detail";
 	}
 	
 }
+
+
+
+

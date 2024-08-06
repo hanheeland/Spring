@@ -27,7 +27,7 @@
 		<c:forEach var="board" items="${list }">
 			<tr>
 				<td>${board.seq }</td>
-				<td><a href="/springweb/board_detail?seq=${board.seq }">${board.title }</a></td>
+				<td><a href="/springweb/board_detail/${board.seq }">${board.title }</a></td>
 				<td>${board.writer }</td>
 				<td>
 					<fmt:parseDate var="dt" value="${board.regdate }" pattern="yyyy-MM-dd"/>
