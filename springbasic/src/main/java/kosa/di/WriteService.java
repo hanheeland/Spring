@@ -8,6 +8,7 @@ public class WriteService implements Service {
 	
 	@Autowired
 	@Qualifier("mySQLDao") // mySQLDao를 먼저 선택한다.
+	// 컴포넌트 스캔은 스프링 컨테이너가 클래스 이름으로 만든다. 첫자는 소문자.
 	private Dao dao;
 	
 	public WriteService() {}

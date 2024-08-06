@@ -12,7 +12,7 @@ public class Main {
    public static void main(String[] args) {
 
 
-	 // 1. 스프링 컨테이너 생성 (xml 파일로 생성 )
+	 // 1. 스프링 컨테이너 생성 (xml 파일로 생성)
 	 /*
 	 * Resource resource = new ClassPathResource("applicationContext.xml");
 	 * BeanFactory factory = new GenericXmlApplicationContext(resource);
