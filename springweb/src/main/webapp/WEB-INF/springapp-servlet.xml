@@ -40,7 +40,7 @@
 	<!-- DataSource를 얻어온다. -->
 	<bean id="myDataSource"
 		class="org.springframework.jndi.JndiObjectFactoryBean">
-		<property name="jndiName" value="jdbc/oracle"></property>
+		<property name="jndiName" value="jdbc/oracle"></property> <!-- server.xml에 name과 일치해야한다 -->
 		<property name="resourceRef" value="true"></property>
 	</bean>
 

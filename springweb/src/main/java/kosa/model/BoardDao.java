@@ -11,7 +11,7 @@ import kosa.mapper.BoardMapper;
 @Repository
 public class BoardDao {
 	
-	@Autowired
+	@Autowired // sqlTemplate를 주입받는다.
 	private SqlSessionTemplate sqlTemplate;
 	
 	// 글 작성하기

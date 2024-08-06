@@ -11,7 +11,7 @@
 </head>
 <body>
 	<h3>글목록</h3>
-	<a href="/springweb/board_insert">글쓰기</a>
+	<a href="/springweb//board_insert">글쓰기</a>
 	<br><br>
 	
 	<table border="1" width="800">
@@ -27,7 +27,7 @@
 		<c:forEach var="board" items="${list }">
 			<tr>
 				<td>${board.seq }</td>
-				<td><a href="detail.jsp?seq=${board.seq }">${board.title }</a></td>
+				<td><a href="/springweb/board_detail?seq=${board.seq }">${board.title }</a></td>
 				<td>${board.writer }</td>
 				<td>
 					<fmt:parseDate var="dt" value="${board.regdate }" pattern="yyyy-MM-dd"/>
