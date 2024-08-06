@@ -17,5 +17,31 @@
 		<property name="prefix" value="/view/"></property>
 		<property name="suffix" value=".jsp"></property>
 	</bean>
+	
+	
+	<!-- DB setting -->
+	
+	<!-- sqlSessionTemplate을 생성한다. mapstatement 호출하고 사용가능하다.-->
+	<bean id="sqlSessionTemplate"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory" ref="mySqlSessionFactoryBean"></constructor-arg>
+	</bean>
+	
+	<!-- DataSource와 mybatis-config.xml을 가지고 
+		mySqlSessionFactoryBean 생성한다.
+	-->
+	<bean id="mySqlSessionFactoryBean"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="myDataSource"></property>
+		<property name="configLocation" value="/WEB-INF/mybatis-config.xml"></property>
+		
+	</bean>
+	
+	<!-- DataSource를 얻어온다. -->
+	<bean id="myDataSource"
+		class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="jdbc/oracle"></property>
+		<property name="resourceRef" value="true"></property>
+	</bean>
 
 </beans>
