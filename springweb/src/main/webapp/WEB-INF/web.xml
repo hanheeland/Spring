@@ -11,7 +11,9 @@
   
   <servlet-mapping>
   	<servlet-name>springapp</servlet-name>
-  	<url-pattern>*.do</url-pattern> <!-- url이 .do로 끝나면 디스패처서블릿을 만난다. -->
+<!--   	<url-pattern>*.do</url-pattern> url이 .do로 끝나면 디스패처서블릿을 만난다.
+ -->  	
+  	<url-pattern>/</url-pattern> <!-- url이 .do로 끝나면 디스패처서블릿을 만난다. -->
   </servlet-mapping>
   
   <welcome-file-list>
