@@ -90,7 +90,7 @@ public class SampleController {
 		log.info("ex07..........");
 		
 		// {"name":"홍길동"}
-		String message = "{\"name\":\"홍길동\"}";
+		String message = "{\"name\":\"홍길동\",\"age\":\"20\"}";
 		
 		org.springframework.http.HttpHeaders header = new org.springframework.http.HttpHeaders();
 		header.add("Content-Type", "application/json;charset=UTF-8");
