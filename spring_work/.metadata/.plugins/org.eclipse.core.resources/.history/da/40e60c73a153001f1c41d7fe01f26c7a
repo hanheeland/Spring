@@ -1,0 +1,18 @@
+package kosa.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+public class BoardController {
+	//board_insert => insert_form.jsp Ãâ·Â
+	
+	@GetMapping({"board_insert"})
+	public ModelAndView board_insert_form() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("insert_form");
+		
+		return mav;
+	}
+}

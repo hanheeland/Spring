@@ -1,0 +1,8 @@
+package kosa.service;
+
+@Service
+public class HelloService {
+	public String getMessage() {
+		return "∏¿¡° «œººø‰!!!";
+	}
+}

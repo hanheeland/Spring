@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- 컨트롤러 자동스캔 (kosa 패키지 안에 컨트톨러들을 스캔한다.)-->
+ 	<context:component-scan base-package="kosa" />
+
+<!-- 	
+<bean id="helloController" class="kosa.controller.HelloController"></bean>
+ -->
+ 
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/view/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	
+	
+	<!-- DB setting -->
+	
+	<!-- sqlSessionTemplate을 생성한다. mapstatement 호출하고 사용가능하다.-->
+	<bean id="sqlSessionTemplate"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory" ref="mySqlSessionFactoryBean"></constructor-arg>
+	</bean>
+	
+	<!-- DataSource와 mybatis-config.xml을 가지고 
+		mySqlSessionFactoryBean 생성한다.
+	-->
+	<bean id="mySqlSessionFactoryBean"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="myDataSource"></property>
+		<property name="configLocation" value="/WEB-INF/mybatis-config.xml"></property>
+		
+	</bean>
+	
+	<!-- DataSource를 얻어온다. -->
+	<bean id="myDataSource"
+		class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="jdbc/oracle"></property> <!-- pom.xml에 name과 일치해야한다 -->
+		<property name="resourceRef" value="true"></property>
+	</bean>
+
+</beans>

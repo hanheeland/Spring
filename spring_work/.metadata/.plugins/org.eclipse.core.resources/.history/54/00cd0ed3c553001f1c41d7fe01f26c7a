@@ -1,0 +1,20 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h2>글 세부보기</h2>
+	<ul>
+		<c:forEach var="board" items="${board }">
+			<li>${board.seq}</li>
+		</c:forEach>
+	</ul>
+	<br><br>
+	<a href="updateForm.jsp?seq=${board.seq}">글수정</a>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- kosa.di 패키지 안에 있는 클래스 객체들만 생성한다. -->
+	<context:component-scan base-package="kosa.di"></context:component-scan>
+
+<!--
+	// 명시적 설정
+	// bean은 아니면 내가 만든 객체가 아니면 설정 해주어야한다. 
+	// OracleDao 객체를 스프링 컨테이너에서 사용하기위해 Bean을 등록한다.
+	<bean id="oracleDao" class="kosa.di.OracleDao"></bean>
+	<bean id="mySQLDao" class="kosa.di.MySQLDao"></bean>
+	
+	
+	<bean id="writeService" class="kosa.di.WriteService">
+		// set메서드를 통해서 mySQLDao 객체를 전달한다. 변수명이랑 같아야한다.
+		<property name="dao" ref="mySQLDao"></property> 반드시 set메서드가 있어야한다.
+		// WriteService 객체에 oracleDao 객체가 DI(의존성 주입)된다.
+		<constructor-arg ref="oracleDao"></constructor-arg>
+	</bean> 
+-->
+
+</beans>

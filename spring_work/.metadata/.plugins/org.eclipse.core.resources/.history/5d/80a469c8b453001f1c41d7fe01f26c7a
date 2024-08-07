@@ -1,0 +1,5 @@
+package kosa.model;
+
+public class BoardDao {
+
+}
