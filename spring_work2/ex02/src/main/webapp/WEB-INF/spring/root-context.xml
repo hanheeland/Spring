@@ -8,6 +8,8 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	
 		<context:component-scan base-package="org.zerock.sample"></context:component-scan>
+		<context:component-scan base-package="org.zerock.service"></context:component-scan>
+		
 		
 		<!-- 커넥션 풀 정보 -->
 		<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
@@ -29,5 +31,4 @@
 		
 		<mybatis-spring:scan base-package="org.zerock.mapper"/>
 		
-		<context:component-scan base-package="org.zerock.service"></context:component-scan>
 </beans>

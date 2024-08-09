@@ -2,12 +2,15 @@ package org.zerock.mapper;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
 
 import lombok.extern.log4j.Log4j;
 
@@ -23,6 +26,16 @@ public class BoardMapperTests {
 //	public void test() { // 글 조회
 //		mapper.getList().forEach(board-> log.info(board));
 //	}
+	
+	@Test
+	public void testPaing() { // 페이징
+		Criteria cri = new Criteria();
+		cri.setPageNum(2);
+		cri.setAmount(5);
+		
+		List<BoardVO> list = mapper.getListWithPaging(cri);
+		list.forEach(board -> log.info(board));
+	}
 	
 //	@Test
 //	public void testInsert() { // 글 작성
@@ -56,16 +69,16 @@ public class BoardMapperTests {
 //		log.info("Delete count: " + mapper.delete(3L));
 //	}
 	
-	@Test
-	public void testUpdate() { // 글 수정
-		BoardVO board = new BoardVO();
-		board.setBno(2L);
-		board.setTitle("수정된제목2");
-		board.setContent("수정된내용2");
-		board.setWriter("user00");
-		
-		int count = mapper.update(board);
-		log.info("Update count: " + count);
-	}
+//	@Test
+//	public void testUpdate() { // 글 수정
+//		BoardVO board = new BoardVO();
+//		board.setBno(2L);
+//		board.setTitle("수정된제목2");
+//		board.setContent("수정된내용2");
+//		board.setWriter("user00");
+//		
+//		int count = mapper.update(board);
+//		log.info("Update count: " + count);
+//	}
 
 }

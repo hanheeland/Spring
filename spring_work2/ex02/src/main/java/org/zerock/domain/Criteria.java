@@ -11,7 +11,7 @@ import lombok.ToString;
 public class Criteria {
 
   private int pageNum;
-  private int amount;
+  private int amount; // 갯수 출력
   
   private String type;
   private String keyword;
