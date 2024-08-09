@@ -5,7 +5,7 @@
 <mapper namespace="org.zerock.mapper.BoardMapper">
 
 
-<!-- 	<sql id="criteria">
+ 	<sql id="criteria">
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
 			<foreach item='type' collection="typeArr">
 				<trim prefix="OR">
@@ -23,7 +23,7 @@
 				</trim>
 			</foreach>
 		</trim>
-	</sql> -->
+	</sql>
 
 
 	<select id="getList" resultType="org.zerock.domain.BoardVO">
@@ -77,14 +77,18 @@
 			select /*+INDEX_DESC(tbl_board pk_board) */ rownum rn, bno, title, content, 
 			writer, regdate, updatedate from 
 			tbl_board 
-			where rownum <= #{pageNum} * #{amount} 
-		) 
-		where rn > (#{pageNum} -1) * #{amount} 
-		]]> 
+			where 
+		]]>
+		<include refid="criteria"></include>
+		
+		<![CDATA[
+			rownum <= #{pageNum} * #{amount} 
+		) where rn > (#{pageNum} -1) * #{amount} 	
+		]]>
 	</select>
 
-<!--
-	<select id="getListWithPaging"
+
+<!-- 	<select id="getListWithPaging"
 		resultType="org.zerock.domain.BoardVO">
   <![CDATA[
   select 
@@ -120,15 +124,14 @@
       )
   where rn > (#{pageNum} -1) * #{amount}   
   ]]>
-	</select>
--->
-
+	</select> -->
 
 
 	<select id="getTotalCount" resultType="int">
 		select count(*) from tbl_board where 
 		
-<!-- 		<include refid="criteria"></include> -->		
+		<include refid="criteria"></include>
+			
 		bno > 0
 		
 	</select>
