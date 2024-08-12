@@ -77,9 +77,60 @@
 </div>
 <!-- /.row -->
 
+<script type="text/javascript" src="/resources/js/reply.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function() {
   
+  //console.log(replyService.add());
+  
+	var bnoValue = '<c:out value="${board.bno}"/>';
+	
+/* 	replyService.get(6, function(data) {
+		console.log(data);
+	}); 
+*/
+	
+/* 	replyService.update({
+		rno  : 6,
+		bno : bnoValue,
+		reply : "Modifed Reply..."
+	}, function(result) {
+		alert("수정완료")
+	}); 
+*/
+	
+/* 	replyService.remove(11, function(count){
+		console.log(count);
+		if (count == "success") {
+			alert("remove");
+		}
+	}, function(err) {
+		alert("error");	
+	}); 
+*/
+	
+/* 	replyService.getList({
+		bno:bnoValue, page:1}
+		, function(list){
+			for(var i = 0; i < list.length; i++) {
+				console.log(list[i]);
+			}
+	}); 
+*/
+  
+/*
+  replyService.add({
+	  reply: "JS TEST",
+	  replyer: "tester",
+	  bno : bnoValue
+	}
+  	, function(result) {
+  		alert("RESULT: " + result);		
+  	}); 
+*/
+  
+	
   var operForm = $("#operForm"); 
   
   $("button[data-oper='modify']").on("click", function(e){
