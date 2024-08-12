@@ -229,8 +229,11 @@
 										function(e) {
 
 											e.preventDefault();
+
+											$("#bno1").remove();
+
 											actionForm
-													.append("<input type='hidden' name='bno' value='"
+													.append("<input type='hidden' id='bno1' name='bno' value='"
 															+ $(this).attr(
 																	"href")
 															+ "'>");
