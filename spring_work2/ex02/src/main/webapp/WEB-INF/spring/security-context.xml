@@ -17,10 +17,8 @@
 			access="hasRole('ROLE_MEMBER')"/>
 		<security:intercept-url pattern="/sample2/admin" 
 			access="hasRole('ROLE_ADMIN')"/>
-	
-		<!-- <security:form-login/> -->
-		
-		<!-- 성공시 원하는곳으로 이동 -->
+			
+		<!-- 성공시 customLoginSuccess 에서 원하는곳으로 이동 -->
 		<security:form-login login-page="/customLogin"
 			authentication-success-handler-ref="customLoginSuccess"/>
 		
@@ -31,10 +29,13 @@
 		<!-- 방법2: bean 객체를 등록하여 사용(다양한 처리 필요시 사용) -->
 		<security:access-denied-handler ref="customAccessDenied"/>
 		
+		<!-- 로그아웃: post 방식 -->
+		<security:logout logout-url="/customLogout" invalidate-session="true"/>
+		
 	</security:http>
 	
 	
-	<!-- id, pw 설정 -->
+	<!-- 인증 설정 -->
 	<security:authentication-manager>
 		<security:authentication-provider>
 			<security:user-service>
