@@ -5,21 +5,41 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+	<bean id="customAccessDenied" class="org.zerock.security.CustomAccessDeniedHandler"></bean>
+	<bean id="customLoginSuccess" 
+		class="org.zerock.security.CustomLoginSuccessHandler" />
+
 	<security:http>
 		
+		<!-- 인증 페이지 설정 -->
 		<security:intercept-url pattern="/sample2/all" access="permitAll"/>
 		<security:intercept-url pattern="/sample2/member" 
 			access="hasRole('ROLE_MEMBER')"/>
 		<security:intercept-url pattern="/sample2/admin" 
 			access="hasRole('ROLE_ADMIN')"/>
 	
-		<security:form-login/>
+		<!-- <security:form-login/> -->
+		
+		<!-- 성공시 원하는곳으로 이동 -->
+		<security:form-login login-page="/customLogin"
+			authentication-success-handler-ref="customLoginSuccess"/>
+		
+		<!-- 403 에러(권한 에러)시 /accessError 컨트롤러로 이동 -->
+		<!-- 방법1: accessError 컨트롤러로 이동(메세지 노출시 사용)-->
+		<!-- <security:access-denied-handler error-page="/accessError"/> -->
+		
+		<!-- 방법2: bean 객체를 등록하여 사용(다양한 처리 필요시 사용) -->
+		<security:access-denied-handler ref="customAccessDenied"/>
+		
 	</security:http>
 	
+	
+	<!-- id, pw 설정 -->
 	<security:authentication-manager>
 		<security:authentication-provider>
 			<security:user-service>
 				<security:user name="member" password="{noop}member" authorities="ROLE_MEMBER"/>
+				<security:user name="admin" password="{noop}admin" authorities="ROLE_MEMBER, ROLE_ADMIN"/>
 			</security:user-service>
 		</security:authentication-provider>
 	</security:authentication-manager>
