@@ -8,6 +8,13 @@
 	<bean id="customAccessDenied" class="org.zerock.security.CustomAccessDeniedHandler"></bean>
 	<bean id="customLoginSuccess" 
 		class="org.zerock.security.CustomLoginSuccessHandler" />
+	<!--  pw 인코딩 처리 -->
+   	<bean id="bcrtpytPasswordEncoder"
+      class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+   	</bean>
+   	<!-- customUserDetailService -->
+   	<bean id="customUserDetailService"
+   		class="org.zerock.security.CustomUserDetailsService"></bean>
 
 	<security:http>
 		
@@ -22,10 +29,6 @@
 		<security:form-login login-page="/customLogin"
 			authentication-success-handler-ref="customLoginSuccess"/>
 		
-		<!-- 403 에러(권한 에러)시 /accessError 컨트롤러로 이동 -->
-		<!-- 방법1: accessError 컨트롤러로 이동(메세지 노출시 사용)-->
-		<!-- <security:access-denied-handler error-page="/accessError"/> -->
-		
 		<!-- 방법2: bean 객체를 등록하여 사용(다양한 처리 필요시 사용) -->
 		<security:access-denied-handler ref="customAccessDenied"/>
 		
@@ -37,11 +40,9 @@
 	
 	<!-- 인증 설정 -->
 	<security:authentication-manager>
-		<security:authentication-provider>
-			<security:user-service>
-				<security:user name="member" password="{noop}member" authorities="ROLE_MEMBER"/>
-				<security:user name="admin" password="{noop}admin" authorities="ROLE_MEMBER, ROLE_ADMIN"/>
-			</security:user-service>
+		<security:authentication-provider user-service-ref="customUserDetailService">
+ 				<!-- pw 인코딩 처리 -->
+ 				<security:password-encoder ref="bcrtpytPasswordEncoder"/>
 		</security:authentication-provider>
 	</security:authentication-manager>
 
