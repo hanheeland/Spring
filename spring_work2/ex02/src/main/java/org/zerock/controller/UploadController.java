@@ -147,6 +147,33 @@ public class UploadController {
 
 	    return new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
+	
+	// 파일 삭제
+	@PostMapping("/deleteFile")
+	@ResponseBody
+	public ResponseEntity<String> deleteFile(String fileName, String type) {
+
+		log.info("deleteFile: " + fileName);
+
+		File file;
+
+		file = new File("C:\\KCC\\upload\\tmp\\2024\\08\\13" + fileName);
+		file.delete();
+
+		if (type.equals("image")) {
+
+			String largeFileName = file.getAbsolutePath()
+			                           .replace("s_", "");
+
+			log.info("largeFileName: " + largeFileName);
+
+			file = new File(largeFileName);
+
+			file.delete();
+		}
+
+		return new ResponseEntity<String>("deleted", HttpStatus.OK);
+	}
 
 	
 	// 오늘 날짜 경로를 문자열로 생성
