@@ -3,6 +3,8 @@ package com.kcc.restfulservice.controller;
 import com.kcc.restfulservice.UserDaoService;
 import com.kcc.restfulservice.bean.User;
 import com.kcc.restfulservice.exception.UserNotFoundException;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -35,7 +37,7 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<User> CreateUser(@RequestBody User user) {
+    public ResponseEntity<User> CreateUser(@Valid @RequestBody User user) {
         User saveUser = service.save(user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -46,18 +48,13 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{id}")
-    public ResponseEntity<User> deleteUser(@PathVariable int id) {
+    public ResponseEntity<String> deleteUser(@PathVariable int id) {
         User deleteUser = service.deleteById(id);
         if (deleteUser == null) {
-            throw new UserNotFoundException(String.format("id[%s] not found", id));
+           // throw new UserNotFoundException(String.format("id[%s] not found", id));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("fail");
         }
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(deleteUser.getId())
-                .toUri();
-
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.ok("success");
     }
-
 
 }
