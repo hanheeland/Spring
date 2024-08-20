@@ -19,6 +19,5 @@ public class Post {
     // LAZY는 필요한 데이터만 보여지도록
     @ManyToOne(fetch = FetchType.LAZY) // 다대일
     @JsonIgnore
-    private User user;
-
+    private User user; // 관계를 설정하기 위해 작성함
 }

@@ -1,6 +1,7 @@
 package com.kcc.restfulservice.controller;
 
 import com.kcc.restfulservice.UserDaoService;
+import com.kcc.restfulservice.bean.Post;
 import com.kcc.restfulservice.bean.User;
 import com.kcc.restfulservice.exception.UserNotFoundException;
 import com.kcc.restfulservice.repository.UserRepository;
@@ -64,6 +65,15 @@ public class UserJpaController {
                 .toUri();
 
         return ResponseEntity.created(location).build();
+    }
+
+    @GetMapping("/users/{id}/posts")
+    public List<Post> retrieveAllPostsByUser(@PathVariable int id) {
+        Optional<User> user = userRepository.findById(id);
+        if (!user.isPresent()) { // Optional로 넘어온다
+            throw new UserNotFoundException(String.format("ID[%s] not found", id));
+        }
+        return user.get().getPosts();
     }
 
 //
