@@ -10,6 +10,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -70,14 +71,19 @@ public class UserController {
         return ResponseEntity.created(location).build();
     }
 
-//    @DeleteMapping("/users/{id}")
-//    public ResponseEntity<String> deleteUser(@PathVariable int id) {
-//        User deleteUser = service.deleteById(id);
-//        if (deleteUser == null) {
-//           // throw new UserNotFoundException(String.format("id[%s] not found", id));
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("fail");
-//        }
-//        return ResponseEntity.ok("success");
-//    }
+    @PatchMapping("/users")
+    public ResponseEntity<String> updateUser(@RequestBody User user) {
+        if (user.getId() == null) {
+            return ResponseEntity.badRequest().body("User ID is required");
+        }
+        service.UpdateUser(user);
+        return ResponseEntity.ok("updated success");
+    }
+
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable int id) {
+        service.deleteUser(id);
+        return ResponseEntity.noContent().build();
+    }
 
 }

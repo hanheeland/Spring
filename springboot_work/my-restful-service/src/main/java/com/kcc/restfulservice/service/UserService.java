@@ -31,4 +31,12 @@ public class UserService {
         mapper.createPost(post);
     }
 
+    public void UpdateUser(User user) {
+        mapper.updateUser(user);
+    }
+
+    public void deleteUser(int id) {
+        mapper.deleteUser(id);
+    }
+
 }

@@ -12,4 +12,6 @@ public interface UserMapper {
     public User findUser(int id);
     public void createUser(User user);
     public void createPost(Post post);
+    public void updateUser(User user);
+    public void deleteUser(int id);
 }

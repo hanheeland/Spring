@@ -45,6 +45,17 @@
         values(post_seq.nextval, #{description}, #{user_id})
     </insert>
 
+    <update id="updateUser">
+        update users set
+            name = #{name},
+            password = #{password}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUser">
+        delete from users where id = #{id}
+    </delete>
+
 </mapper>
 
 
