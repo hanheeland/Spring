@@ -1,10 +1,12 @@
 package com.kcc.restfulservice.controller;
 
-import com.kcc.restfulservice.UserDaoService;
+import com.kcc.restfulservice.bean.Post;
 import com.kcc.restfulservice.bean.User;
 import com.kcc.restfulservice.exception.UserNotFoundException;
+import com.kcc.restfulservice.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.hateoas.EntityModel;
+
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +21,10 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 @RestController
 public class UserController {
 
-    private UserDaoService service;
+    private UserService service;
 
     // 생성자 주입
-    public UserController(UserDaoService service) {
+    public UserController(UserService service) {
         this.service = service;
     }
 
@@ -48,32 +50,34 @@ public class UserController {
 
     @PostMapping("/users")
     public ResponseEntity<User> CreateUser(@Valid @RequestBody User user) {
-        User saveUser = service.save(user);
+        service.save(user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(saveUser.getId())
+                .buildAndExpand(user.getId())
                 .toUri();
 
         return ResponseEntity.created(location).build();
     }
 
-    @PatchMapping("/users")
-    public ResponseEntity<String> UpdateUser(@Valid @RequestBody User user) {
-        User saveUser = service.update(user);
-        if (saveUser == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(String.format("ID[%s] not found", user.getId()));
-        }
-        return ResponseEntity.ok("success");
+    @PostMapping("/users/{id}/posts")
+    public ResponseEntity<Post> createPost(@RequestBody Post post) {
+        service.savePost(post);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(post.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).build();
     }
 
-    @DeleteMapping("/users/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable int id) {
-        User deleteUser = service.deleteById(id);
-        if (deleteUser == null) {
-           // throw new UserNotFoundException(String.format("id[%s] not found", id));
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("fail");
-        }
-        return ResponseEntity.ok("success");
-    }
+//    @DeleteMapping("/users/{id}")
+//    public ResponseEntity<String> deleteUser(@PathVariable int id) {
+//        User deleteUser = service.deleteById(id);
+//        if (deleteUser == null) {
+//           // throw new UserNotFoundException(String.format("id[%s] not found", id));
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("fail");
+//        }
+//        return ResponseEntity.ok("success");
+//    }
 
 }

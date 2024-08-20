@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.kost.kostaservice.mapper.UserMapper">
+<mapper namespace="com.kcc.restfulservice.mapper.UserMapper">
 
 <!--   <select id="findAllUsers" resultType="User">-->
 <!--        select * from users-->
@@ -25,9 +25,9 @@
 
     <select id="findAllUsers" resultType="User" resultMap="userMap">
         select
-            u.id as u_id, name, joinDate, password, ssn, p.id as p_id , description, user_id
-        from
-            users u LEFT OUTER JOIN post p
+        u.id as u_id, name, joinDate, password, ssn, p.id as p_id , description, user_id
+        from users u
+        LEFT OUTER JOIN post p
         ON u.id = p.user_id
     </select>
 
