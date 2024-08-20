@@ -57,6 +57,15 @@ public class UserController {
         return ResponseEntity.created(location).build();
     }
 
+    @PatchMapping("/users")
+    public ResponseEntity<String> UpdateUser(@Valid @RequestBody User user) {
+        User saveUser = service.update(user);
+        if (saveUser == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(String.format("ID[%s] not found", user.getId()));
+        }
+        return ResponseEntity.ok("success");
+    }
+
     @DeleteMapping("/users/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable int id) {
         User deleteUser = service.deleteById(id);

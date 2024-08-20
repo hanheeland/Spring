@@ -44,6 +44,15 @@ public class UserDaoService {
         return null;
     }
 
+    public User update(User user) {
+        User userData = findOne(user.getId());
+        if (userData == null) {
+            return null;
+        }
+        userData.setName(user.getName());
+        return user;
+    }
+
     public User deleteById(int id) {
         Iterator<User> iterator = users.iterator();
         while (iterator.hasNext()) {
