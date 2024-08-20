@@ -4,12 +4,14 @@ import com.kcc.restfulservice.UserDaoService;
 import com.kcc.restfulservice.bean.Post;
 import com.kcc.restfulservice.bean.User;
 import com.kcc.restfulservice.exception.UserNotFoundException;
+import com.kcc.restfulservice.repository.PostRepository;
 import com.kcc.restfulservice.repository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -25,9 +27,11 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class UserJpaController {
 
     private UserRepository userRepository;
+    private PostRepository postRepository;
 
-    public UserJpaController(UserRepository userRepository) {
+    public UserJpaController(UserRepository userRepository, PostRepository postRepository) {
         this.userRepository = userRepository;
+        this.postRepository = postRepository;
     }
 
     @GetMapping("/users")
@@ -76,15 +80,35 @@ public class UserJpaController {
         return user.get().getPosts();
     }
 
-//
-//    @PatchMapping("/users")
-//    public ResponseEntity<String> UpdateUser(@Valid @RequestBody User user) {
-//        User saveUser = service.update(user);
-//        if (saveUser == null) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(String.format("ID[%s] not found", user.getId()));
-//        }
-//        return ResponseEntity.ok("success");
-//    }
-//
+    @PostMapping("/users/{id}/posts")
+    public ResponseEntity<Post> CreatePost(@PathVariable int id, @Valid @RequestBody Post post) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            throw new UserNotFoundException(String.format("ID[%s] not found", id));
+        }
+        post.setUser(user.get());
+        postRepository.save(post);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(post.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).build();
+    }
+
+    @GetMapping("/users/{userId}/posts/{id}")
+    public EntityModel<Post> retrievePost(@PathVariable int userId, @PathVariable int id) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isEmpty()) {
+            throw new UserNotFoundException(String.format("ID[%s] not found", userId));
+        }
+        Optional<Post> post = postRepository.findById(id);
+        if (post.isEmpty()) {
+            throw new UserNotFoundException(String.format("ID[%s] not found", id));
+        }
+        return EntityModel.of(post.get());
+    }
+
 
 }
