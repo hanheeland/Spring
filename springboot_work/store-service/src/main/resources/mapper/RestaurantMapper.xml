@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kcc.storeservice.mapper.RestaurantMapper">
+
+    <resultMap id="ReviewsMap" type="ReviewDTO">
+        <result property="avgScore" column="avgScore"/>
+        <collection property="reviews" resultMap="ReviewMap"/>
+    </resultMap>
+
+    <resultMap id="ReviewMap" type="ReviewVO">
+        <result property="id" column="id"/>
+        <result property="restaurant_id" column="restaurant_id"/>
+        <result property="content" column="content"/>
+        <result property="score" column="score"/>
+        <result property="created_at" column="created_at"/>
+    </resultMap>
+
+    <resultMap id="RestaurantMap" type="RestaurantVO">
+        <id property="id" column="r_id"/>
+        <result property="name" column="r_name"/>
+        <result property="address" column="r_address"/>
+        <result property="created_at" column="r_created_at"/>
+        <result property="updated_at" column="r_updated_at"/>
+        <collection property="menus" resultMap="MenuMap"/>
+    </resultMap>
+
+    <resultMap id="MenuMap" type="RestaurantMenuVO">
+        <result property="id" column="rm_id"/>
+        <result property="name" column="rm_name"/>
+        <result property="price" column="rm_price"/>
+        <result property="created_at" column="rm_created_at"/>
+        <result property="updated_at" column="rm_updated_at"/>
+    </resultMap>
+
+    <select id="findOne" resultMap="RestaurantMap" parameterType="int">
+        select r.id as r_id, r.name as r_name, r.address as r_address, r.created_at as r_created_at, r.updated_at as r_updated_at,
+        rm.id as rm_id, rm.name as rm_name, rm.price as rm_price, rm.created_at as rm_created_at, rm.updated_at as rm_updated_at
+        from restaurant r
+        left outer join restaurant_menu rm
+        on r.id = rm.restaurant_id
+        WHERE r.id = #{id}
+    </select>
+
+    <select id="findAll">
+        select /*+INDEX_DESC(restaurant)*/ * from restaurant
+    </select>
+
+    <select id="findReviews" resultMap="ReviewsMap" parameterType="int">
+        select (select round(avg(score),2) from review) as avgScore,
+        id, restaurant_id, content, score, created_at
+        from review
+        where restaurant_id = #{id}
+    </select>
+
+    <insert id="save">
+        insert into restaurant
+            (id, name, address, created_at, updated_at)
+            values (restaurant_seq.nextval, #{name}, #{address}, SYSDATE, SYSDATE)
+    </insert>
+
+    <insert id="saveMenu">
+        <selectKey keyProperty="restaurant_id" order="BEFORE"
+                   resultType="Integer">
+            select max(id) from restaurant
+        </selectKey>
+        insert into restaurant_menu
+        (id, restaurant_id, name, price, created_at, updated_at)
+        values (restaurant_menu_seq.nextval, #{restaurant_id}, #{name}, #{price}, SYSDATE, SYSDATE)
+    </insert>
+
+    <update id="update">
+        update restaurant set
+            name = #{name},
+            address = #{address},
+            updated_at = SYSDATE
+        where id = #{id}
+    </update>
+
+    <update id="updateMenu">
+        update restaurant_menu set
+            name = #{name},
+            price = #{price},
+            updated_at = SYSDATE
+        where restaurant_id = #{id}
+    </update>
+
+    <delete id="delete">
+        delete from restaurant where id = #{id}
+    </delete>
+
+    <delete id="deleteMenu">
+        delete from restaurant_menu where restaurant_id = #{id}
+    </delete>
+
+</mapper>
+
+
+
+
