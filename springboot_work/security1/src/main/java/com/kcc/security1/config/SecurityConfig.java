@@ -1,5 +1,7 @@
 package com.kcc.security1.config;
 
+import com.kcc.security1.oauth.PrincipalOauth2UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +17,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfig {
+
+    @Autowired
+    PrincipalOauth2UserService principalOauth2UserService;
 
     @Bean
     public BCryptPasswordEncoder encodePwd() {
@@ -36,7 +41,12 @@ public class SecurityConfig {
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .formLogin(formLogin -> formLogin.loginPage("/loginForm")
                         .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/main"));
+                        .defaultSuccessUrl("/main")
+                ).oauth2Login(oauth2Login->
+                        oauth2Login.loginPage("/loginForm")
+                                .userInfoEndpoint(userInfoEndpoint ->
+                                        userInfoEndpoint.userService(principalOauth2UserService))
+                        );
 
         return http.build();
     }
