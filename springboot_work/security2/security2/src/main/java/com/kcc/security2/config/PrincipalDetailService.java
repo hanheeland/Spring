@@ -19,7 +19,7 @@ public class PrincipalDetailService implements UserDetailsService {
         System.out.println("loadUserByUsername 호출......");
         User UserEntity = userRepository.findByUsername(username);
 
-        return new PrinciparDetail(UserEntity);
+        return new PrincipalDetail(UserEntity);
     }
 
 

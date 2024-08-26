@@ -1,17 +1,18 @@
 package com.kcc.security2.config;
 
 import com.kcc.security2.model.User;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
-public class PrinciparDetail implements UserDetails {
+@Data
+public class PrincipalDetail implements UserDetails {
     private User user;
 
-    public PrinciparDetail(User user) {
+    public PrincipalDetail(User user) {
         this.user = user;
     }
 

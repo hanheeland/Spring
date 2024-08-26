@@ -29,4 +29,19 @@ public class RestApiController {
         return "회원가입 완료";
     }
 
+    @GetMapping("/manager/mm")
+    public String manager() {
+        return "manager";
+    }
+
+    @GetMapping("/admin/admin")
+    public String admin() {
+        return "admin";
+    }
+
+    @GetMapping("/user")
+    public String user() {
+        return "user";
+    }
+
 }
